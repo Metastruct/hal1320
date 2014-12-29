@@ -6,7 +6,6 @@ from willie.module import commands
 
 HOST, PORT = "0.0.0.0", 37477
 server = None
-_willie = None
 
 class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
@@ -15,8 +14,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         response = "{}: {}".format(cur_thread.name, data)
 
         print "[GAME] Recieved: {}".format(response)
-        _willie.msg('#ingame', response)
-        
+
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -60,9 +58,6 @@ def stop():
         return False
 
 def setup(willie):
-    # Allows us to send messages from outside bot commands
-    global _willie
-    _willie = willie
     willie.join('#ingame')
 
     start()
