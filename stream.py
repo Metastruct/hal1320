@@ -34,7 +34,7 @@ def stream(bot, trigger):
     else:
         data = json.loads(resp.read())
 
-        if not data or data.offline:
+        if not data or 'offline' in data:
             bot.say('Stream is offline.')
         else:
             plural = 's'
