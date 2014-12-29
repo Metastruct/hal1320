@@ -20,23 +20,26 @@ def client(ip, port, message):
     sock.connect((ip, port))
     try:
         sock.sendall(message)
-        response = sock.recv(1024)
-        print "Received: {}".format(response)
+        #response = sock.recv(1024)
+        #print "Received: {}".format(response)
     finally:
         sock.close()
 
 HOST, PORT = "0.0.0.0", 37477
-server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
-server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server = None
 
 def start():
-    # Start a thread with the server -- that thread will then start one
-    # more thread for each request
-    server_thread = threading.Thread(target=server.serve_forever)
-    # Exit the server thread when the main thread terminates
-    server_thread.daemon = True
     try:
+        server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+        # Start a thread with the server -- that thread will then start one
+        # more thread for each request
+        server_thread = threading.Thread(target=server.serve_forever)
+        # Exit the server thread when the main thread terminates
+        server_thread.daemon = True
+    
         server_thread.start()
         print "Server loop running in thread:", server_thread.name
     except Exception, e:
