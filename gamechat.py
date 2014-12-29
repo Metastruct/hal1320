@@ -9,7 +9,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         data = self.request.recv(1024)
         cur_thread = threading.current_thread()
         response = "{}: {}".format(cur_thread.name, data)
-        print "Recieved: {}".format(response)
+        print "[GAME] Recieved: {}".format(response)
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -21,7 +21,7 @@ def client(ip, port, message):
     try:
         sock.sendall(message)
         #response = sock.recv(1024)
-        #print "Received: {}".format(response)
+        #print "[GAME] Received: {}".format(response)
     finally:
         sock.close()
 
@@ -41,12 +41,20 @@ def start():
         server_thread.daemon = True
     
         server_thread.start()
-        print "Server loop running in thread:", server_thread.name
+        print "[GAME] Server loop running in thread:", server_thread.name
+
+        return True
     except Exception, e:
-        print "Failed to start server:", e
+        print "[GAME] Failed to start server:", e
+        return False
 
 def stop():
-    server.shutdown()
+    try:
+        server.shutdown()
+        return True
+    except Exception, e:
+        print "[GAME] Failed to stop server:", e
+        return False
 
 def setup(willie):
     start()
@@ -60,11 +68,15 @@ def shutdown(willie):
 @commands('startserver')
 def startserver(bot, trigger):
     if (trigger.admin):
-        start()
-        bot.say('Server started.')
+        if (start()):
+            bot.say('[GAME] Server started.')
+        else:
+            bot.say('[GAME] Server failed to start.')
 
 @commands('stopserver')
 def stopserver(bot, trigger):
     if (trigger.admin):
-        stop()
-        bot.say('Server stopped.')
+        if (stop()) :
+            bot.say('[GAME] Server stopped.')
+        else:
+            bot.say('[GAME] Server failed to stop.')
