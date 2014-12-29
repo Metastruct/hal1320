@@ -27,6 +27,8 @@ def client(ip, port, message):
 
 HOST, PORT = "0.0.0.0", 37477
 server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 def start():
     # Start a thread with the server -- that thread will then start one
