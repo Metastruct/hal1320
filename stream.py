@@ -18,11 +18,11 @@ def configure(config):
         )
 
 def setup(bot):
-    if not getattr(bot.config, 'stream', None):
+    if not bot.config.has_section('stream'):
         raise ConfigurationError('Stream is not configured')
-    if not getattr(bot.config.stream, 'url', None):
+    if not bot.config.has_option('stream', 'url'):
         raise ConfigurationError('Stream URL is not defined')
-    if not getattr(bot.config.stream, 'statsurl', None):
+    if not bot.config.has_option('stream', 'statsurl'):
         raise ConfigurationError('Stream stats URL is not defined')
 
 @commands('stream')
