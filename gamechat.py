@@ -4,12 +4,19 @@ import SocketServer
 
 from willie.module import commands
 
+HOST, PORT = "0.0.0.0", 37477
+server = None
+_willie = None
+
 class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         data = self.request.recv(1024)
         cur_thread = threading.current_thread()
         response = "{}: {}".format(cur_thread.name, data)
+
         print "[GAME] Recieved: {}".format(response)
+        _willie.msg('#ingame', response)
+        
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -24,9 +31,6 @@ def client(ip, port, message):
         #print "[GAME] Received: {}".format(response)
     finally:
         sock.close()
-
-HOST, PORT = "0.0.0.0", 37477
-server = None
 
 def start():
     try:
@@ -56,6 +60,11 @@ def stop():
         return False
 
 def setup(willie):
+    # Allows us to send messages from outside bot commands
+    global _willie
+    _willie = willie
+    willie.join('#ingame')
+
     start()
 
     # To send something
