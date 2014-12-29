@@ -38,7 +38,7 @@ def stream(bot, trigger):
             bot.say('Stream is offline.')
         else:
             plural = 's'
-            if data.listeners == 1:
+            if data['listeners'] == 1:
                 plural = ''
 
-            bot.say('Now playing: {0} - {1} | {2} listener{3} | {4}'.format(data.artist, data.title, data.listeners, plural, bot.config.stream.url))
+            bot.say('Now playing: {0} - {1} | {2} listener{3} | {4}'.format(data['artist'], data['title'], data['listeners'], plural, bot.config.stream.url))
