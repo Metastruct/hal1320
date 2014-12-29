@@ -25,11 +25,10 @@ def client(ip, port, message):
     finally:
         sock.close()
 
+HOST, PORT = "0.0.0.0", 37477
 server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
 
 def start():
-    HOST, PORT = "0.0.0.0", 37477
-
     # Start a thread with the server -- that thread will then start one
     # more thread for each request
     server_thread = threading.Thread(target=server.serve_forever)
