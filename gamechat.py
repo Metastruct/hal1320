@@ -30,7 +30,8 @@ server = None
 
 def start():
     try:
-        global server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
+        global server
+        server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
 
         # Start a thread with the server -- that thread will then start one
         # more thread for each request
