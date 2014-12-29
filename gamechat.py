@@ -54,10 +54,12 @@ def shutdown(willie):
 
 @commands('startserver')
 def startserver(bot, trigger):
-    start()
-    bot.say('Server started.')
+    if (bot.admin()):
+        start()
+        bot.say('Server started.')
 
 @commands('stopserver')
 def stopserver(bot, trigger):
-    stop()
-    bot.say('Server stopped.')
+    if (bot.admin()):
+        stop()
+        bot.say('Server stopped.')
