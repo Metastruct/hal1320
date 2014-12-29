@@ -13,7 +13,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-    pass
+    allow_reuse_address = True
 
 def client(ip, port, message):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,8 +31,6 @@ server = None
 def start():
     try:
         server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         # Start a thread with the server -- that thread will then start one
         # more thread for each request
