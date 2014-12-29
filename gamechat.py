@@ -34,8 +34,11 @@ def start():
     server_thread = threading.Thread(target=server.serve_forever)
     # Exit the server thread when the main thread terminates
     server_thread.daemon = True
-    server_thread.start()
-    print "Server loop running in thread:", server_thread.name
+    try:
+        server_thread.start()
+        print "Server loop running in thread:", server_thread.name
+    except Exception, e:
+        print "Failed to start server:", e
 
 def stop():
     server.shutdown()
