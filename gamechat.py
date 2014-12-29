@@ -9,7 +9,7 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         data = self.request.recv(1024)
         cur_thread = threading.current_thread()
         response = "{}: {}".format(cur_thread.name, data)
-
+        print "Recieved: {}".format(response)
         self.request.sendall(response)
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
