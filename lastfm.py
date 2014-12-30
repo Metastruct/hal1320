@@ -17,7 +17,7 @@ def setup(bot):
     if not bot.config.has_option('lastfm', 'apikey'):
         raise ConfigurationError('Last.fm API key is not defined')
 
-@commands('stream')
+@commands('lastfm')
 def lastfm(bot, trigger):
     username = trigger.group(2)
 
