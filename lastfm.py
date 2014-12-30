@@ -40,7 +40,7 @@ def lastfm(bot, trigger):
                     currenttrack = ''
 
                     for track in data['recenttracks']['track']:
-                        if track['@attr'] and track['@attr']['nowplaying']:
+                        if '@attr' in track and track['@attr']['nowplaying']:
                             currenttrack = '{0} - {1}'.format(track['artist']['#text'], track['name']) 
                             break
 
