@@ -34,14 +34,14 @@ def lastfm(bot, trigger):
             if not data:
                 bot.say('Failed to parse last.fm data.')
             else:
-                if not 'recenttracks' in data or not 'track' in data.recenttracks:
+                if not data['recenttracks']:
                     bot.say('Invalid username or no recently played tracks.')
                 else:
                     currenttrack = ''
 
-                    for track in data.recenttracks.track:
+                    for track in data['recenttracks']['track']:
                         if track['@attr'] and track['@attr']['nowplaying']:
-                            currenttrack = '{0} - {1}'.format(track.artist['#text'], track.name) 
+                            currenttrack = '{0} - {1}'.format(track['artist']['#text'], track['name']) 
                             break
 
                     if currenttrack != '':
