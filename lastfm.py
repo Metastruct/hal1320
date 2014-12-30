@@ -44,7 +44,7 @@ def lastfm(bot, trigger):
                             currenttrack = '{0} - {1}'.format(track.artist['#text'], track.name) 
                             break
 
-                    if currenttrack != '' then:
+                    if currenttrack != '':
                         bot.say('{0} is currently listening to: {1} (via last.fm)'.format(username, currenttrack))
                     else:
                         bot.say('%s is not currently listening to anything.' % username)
