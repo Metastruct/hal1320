@@ -20,4 +20,5 @@ def setup(bot):
 
 @commands('bofh')
 def bofh(bot, trigger):
+	"""Posts a random BOFH excuse."""
     bot.say(random.choice(list(open(bot.config.bofh.path))))
