@@ -2,8 +2,17 @@ from willie import web
 from willie import module
 import time
 import json
+import re
 
-import urllib
+regex = re.compile('(play.spotify.com\/track\/)([\w-]+)')
+
+def setup(bot):
+    if not bot.memory.contains('url_callbacks'):
+        bot.memory['url_callbacks'] = tools.WillieMemory()
+    bot.memory['url_callbacks'][regex] = spotify
+
+def shutdown(bot):
+    del bot.memory['url_callbacks'][regex]
 
 @module.rule('.*(play.spotify.com\/track\/)([\w-]+).*')
 def spotify(bot, trigger, found_match=None):
