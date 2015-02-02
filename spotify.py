@@ -1,11 +1,10 @@
 from willie import web
 from willie import module
-from willie.module import commands
 import time
 
 import urllib
 
-@rule('.*(play.spotify.com\/track\/)([\w-]+).*')
+@module.rule('.*(play.spotify.com\/track\/)([\w-]+).*')
 def spotify(bot, trigger, found_match=None):
     match = found_match or trigger
 
