@@ -21,11 +21,15 @@ def fucking_weather(bot, trigger):
         bot.reply("INVALID FUCKING PLACE. PLEASE ENTER A FUCKING ZIP CODE, OR A FUCKING CITY-STATE PAIR.")
         return
     text = web.quote(text)
-    page = web.get("http://thefuckingweather.com/?where=%s" % (text))
+    page = web.get("http://thefuckingweather.com/?where=%s&unit=c" % (text))
     re_mark = re.compile('<p class="remark">(.*?)</p>')
+    re_temp = re.compile('<span class="temperature" tempf="(.*)">(.*?)</span>')
+    re_flavor = re.compile('<p class="flavor">(.*?)</p>')
     results = re_mark.findall(page)
+    temp = re_temp.findall(page)
+    flavor = re_flavor.findall(page)
     if results:
-        bot.reply(results[0])
+        bot.reply(temp[0]+"°?! "+results[0]+" ,"+flavor[0])
     else:
-        bot.reply("I CAN'T GET THE FUCKING WEATHER.")
+        bot.reply("I CAN'T FIND THAT SHIT")
         return bot.NOLIMIT
