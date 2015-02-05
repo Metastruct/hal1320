@@ -7,6 +7,7 @@ Licensed under the Eiffel Forum License 2.
 
 http://willie.dftba.net
 """
+# -*- coding: utf-8 -*-
 from willie.module import commands, rate, priority, NOLIMIT
 from willie import web
 import re
