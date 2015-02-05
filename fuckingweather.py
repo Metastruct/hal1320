@@ -30,7 +30,7 @@ def fucking_weather(bot, trigger):
     temp = re_temp.findall(page)
     flavor = re_flavor.findall(page)
     if results:
-        bot.reply(temp[0]+u'\N{DEGREE SIGN}'+'°?! '+results[0]+u' ,'+flavor[0])
+        bot.reply(temp[0]+u'\N{DEGREE SIGN}'+'?! '+results[0]+u' ,'+flavor[0])
     else:
         bot.reply("I CAN'T FIND THAT SHIT")
         return bot.NOLIMIT
