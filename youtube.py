@@ -178,8 +178,8 @@ def ytinfo(bot, trigger, found_match=None):
 			#          ' | Likes: ' + video_info['likes'] + \
 			#          ' | Dislikes: ' + video_info['dislikes'] + \
 
-			message = '[YouTube] Title: ' + video_info['title'] + \
-					' | Duration: ' + video_info['length']
+			message = ('[YouTube] Title: ' + video_info['title'] + \
+					' | Duration: ' + video_info['length'])
 
 			bot.say(HTMLParser().unescape(message))
 
