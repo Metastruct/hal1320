@@ -168,11 +168,12 @@ def ytinfo(bot, trigger, found_match=None):
     if video_info is 'err':
         return
 
-	#combine variables and print
-	message = '[YouTube] Title: ' + video_info['title'] + \
-			  ' | Duration: ' + video_info['length']
+    #combine variables and print
+    message = '[YouTube] Title: ' + video_info['title'] + \
+              ' | Duration: ' + video_info['length'] + \
+              ' | Views: ' + video_info['views']
 
-	bot.say(HTMLParser().unescape(message))
+    bot.say(HTMLParser().unescape(message))
 
 
 @commands('ytlast', 'ytnew', 'ytlatest')
