@@ -171,7 +171,8 @@ def ytinfo(bot, trigger, found_match=None):
     #combine variables and print
     message = '[YouTube] Title: ' + video_info['title'] + \
               ' | Duration: ' + video_info['length'] + \
-              ' | Views: ' + video_info['views']
+              ' | Views: ' + video_info['views'] + \
+              ' | Uploader: ' + video_info['uploader']
 
     bot.say(HTMLParser().unescape(message))
 
