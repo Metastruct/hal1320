@@ -1,22 +1,18 @@
 from sopel.module import commands
 from sopel.config import ConfigurationError
+from sopel.config.types import StaticSection, ValidatedAttribute
 
 import random
 
-def configure(config):
-    if config.option('Configure BOFH', False):
-        config.add_section('bofh')
-        config.interactive_add(
-            'bofh', 'path',
-            'Path to BOFH text file.',
-            default='/home/hal1320/.sopel/bofh.txt'
-        )
+class BOFHsection(StaticSection):
+    path = ValidatedAttribute('path', default='/home/hal1320/.sopel/bofh.txt')
 
 def setup(bot):
-    if not bot.config.has_section('bofh'):
-        raise ConfigurationError('BOFH is not configured')
-    if not bot.config.has_option('bofh', 'path'):
-        raise ConfigurationError('BOFH path is not defined')
+    bot.config.define_section('bofh', BOFHsection)
+
+def configure(config):
+    config.define_section('bofh', BOFHsection, validate=False)
+    config.bofh.configure_setting('path', 'Path to BOFH text file.')
 
 @commands('bofh')
 def bofh(bot, trigger):
