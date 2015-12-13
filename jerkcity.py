@@ -1,5 +1,5 @@
-from willie.module import commands
-from willie.config import ConfigurationError
+from sopel.module import commands
+from sopel.config import ConfigurationError
 
 import random
 
@@ -9,7 +9,7 @@ def configure(config):
         config.interactive_add(
             'jerkcity', 'path',
             'Path to Jerkcity text file.',
-            default='/home/hal1320/.willie/jerkcity.txt'
+            default='/home/hal1320/.sopel/jerkcity.txt'
         )
 
 def setup(bot):

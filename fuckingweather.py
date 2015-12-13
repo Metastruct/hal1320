@@ -1,15 +1,14 @@
 """
-fuckingweather.py - Willie module for The Fucking Weather
+fuckingweather.py - Sopel module for The Fucking Weather
 Copyright 2013 Michael Yanovich
 Copyright 2013 Edward Powell
 
 Licensed under the Eiffel Forum License 2.
 
-http://willie.dftba.net
+http://sopel.chat
 """
-# -*- coding: utf-8 -*-
-from willie.module import commands, rate, priority, NOLIMIT
-from willie import web
+from sopel.module import commands, rate, priority, NOLIMIT
+from sopel import web
 import re
 
 
@@ -22,15 +21,11 @@ def fucking_weather(bot, trigger):
         bot.reply("INVALID FUCKING PLACE. PLEASE ENTER A FUCKING ZIP CODE, OR A FUCKING CITY-STATE PAIR.")
         return
     text = web.quote(text)
-    page = web.get("http://thefuckingweather.com/?where=%s&unit=c" % (text))
-    re_mark = re.compile('<p class="remark">(.*?)</p>')
-    re_temp = re.compile('<span class="temperature" tempf="(.*)">(.*?)</span>')
-    re_flavor = re.compile('<p class="flavor">(.*?)</p>')
+    page = web.get("http://thefuckingweather.com/Where/%s" % (text))
+    re_mark = re.compile('<p class="remark jsRemark">(.*?)</p>')
     results = re_mark.findall(page)
-    temp = re_temp.findall(page)
-    flavor = re_flavor.findall(page)
     if results:
-        bot.reply(str(temp[0][1])+u"\N{DEGREE SIGN}"+"C?! "+results[0]+" , "+flavor[0])
+        bot.reply(results[0])
     else:
-        bot.reply("I CAN'T FIND THAT SHIT")
+        bot.reply("I CAN'T GET THE FUCKING WEATHER.")
         return bot.NOLIMIT

@@ -1,4 +1,4 @@
-from willie.module import commands
+from sopel.module import commands
 
 import urllib
 

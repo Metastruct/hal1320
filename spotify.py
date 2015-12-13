@@ -1,5 +1,5 @@
-from willie import web
-from willie import module
+from sopel import web
+from sopel import module
 import time
 import json
 import re

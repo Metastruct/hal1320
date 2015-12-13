@@ -1,5 +1,5 @@
-from willie.module import commands
-from willie.config import ConfigurationError
+from sopel.module import commands
+from sopel.config import ConfigurationError
 
 import random
 
@@ -9,7 +9,7 @@ def configure(config):
         config.interactive_add(
             'bofh', 'path',
             'Path to BOFH text file.',
-            default='/home/hal1320/.willie/bofh.txt'
+            default='/home/hal1320/.sopel/bofh.txt'
         )
 
 def setup(bot):

@@ -1,5 +1,5 @@
-from willie.module import commands
-from willie.config import ConfigurationError
+from sopel.module import commands
+from sopel.config import ConfigurationError
 
 import urllib, json
 
