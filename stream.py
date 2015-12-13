@@ -1,29 +1,20 @@
 from sopel.module import commands
 from sopel.config import ConfigurationError
+from sopel.config.types import StaticSection, ValidatedAttribute
 
 import urllib, json
 
-def configure(config):
-    if config.option('Configure stream URLs', False):
-        config.add_section('stream')
-        config.interactive_add(
-            'stream', 'url',
-            'URL for listening to the stream.',
-            default='http://test.com:8000/hello.ogg'
-        )
-        config.interactive_add(
-            'stream', 'statsurl',
-            'URL for retreiving stream stats.',
-            default='http://test.com/stats.php'
-        )
+class StreamSection(StaticSection):
+    url = ValidatedAttribute('url', default='http://example.com:8000/hello.ogg')
+    statsurl = ValidatedAttribute('statsurl', default='http://example.com/stats.php')
 
 def setup(bot):
-    if not bot.config.has_section('stream'):
-        raise ConfigurationError('Stream is not configured')
-    if not bot.config.has_option('stream', 'url'):
-        raise ConfigurationError('Stream URL is not defined')
-    if not bot.config.has_option('stream', 'statsurl'):
-        raise ConfigurationError('Stream stats URL is not defined')
+    bot.config.define_section('stream', StreamSection)
+
+def configure(config):
+    config.define_section('stream', StreamSection, validate=False)
+    config.stream.configure_setting('url', 'URL for listening to the stream.')
+    config.stream.configure_setting('statsurl', 'URL for retreiving stream stats.')
 
 @commands('stream')
 def stream(bot, trigger):
