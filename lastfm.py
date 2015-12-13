@@ -1,21 +1,18 @@
 from sopel.module import commands
 from sopel.config import ConfigurationError
+from sopel.config.types import StaticSection, ValidatedAttribute
 
 import urllib, json
 
-def configure(config):
-    if config.option('Configure last.fm', False):
-        config.add_section('lastfm')
-        config.interactive_add(
-            'lastfm', 'apikey',
-            'Last.fm API key'
-        )
+class LastFMsection(StaticSection):
+    path = ValidatedAttribute('apikey')
 
 def setup(bot):
-    if not bot.config.has_section('lastfm'):
-        raise ConfigurationError('Last.fm is not configured')
-    if not bot.config.has_option('lastfm', 'apikey'):
-        raise ConfigurationError('Last.fm API key is not defined')
+    bot.config.define_section('lastfm', LastFMsection)
+
+def configure(config):
+    config.define_section('lastfm', LastFMsection, validate=False)
+    config.lastfm.configure_setting('apikey', 'Last.fm API key')
 
 @commands('lastfm')
 def lastfm(bot, trigger):
